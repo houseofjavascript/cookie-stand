@@ -1,18 +1,38 @@
+'use strict';
+
 console.log('hello world');
 
 /// * Dom Windows *******
 
-// let salmonsection = document.getElementById('Salmon-Cookies');
-
 let table = document.getElementById('table');
 
+let form = document.getElementById('Form');
+
 /// *********** Helper Functions / Utilities ******
+
+form.addEventListener('submit', handlesubmit);
 
 let hours = ['6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm'];
 
 let cookiesArray = [];
 
 // *** constructor function *****
+
+function handlesubmit(event) {
+  event.preventDefault();
+  console.log('form submitted');
+  let storelocation = event.target.StoreLocation.value;
+  let minicust = event.target.MinimumCustomer.value;
+  let maxcust = event.target.MaximumCustomer.value;
+  let avgCookieBought = event.target.AverageCookiesBought.value;
+
+  let newstore = new Cookies(storelocation, minicust, maxcust, avgCookieBought);
+  cookiesArray.push(newstore);
+
+  newstore.cookiesales();
+  newstore.render();
+
+}
 
 function Cookies(name, minCust, maxCust, avgCookieBought) {
   this.name = name;
@@ -62,23 +82,27 @@ Cookies.prototype.render = function () {
 };
 
 function header() {
+  let table = document.getElementById('table');
+
   let trElem = document.createElement('tr');
   table.appendChild(trElem);
 
+  let thead = document.createElement('thead');
+  trElem.appendChild(thead);
 
   let nameElem = document.createElement('th');
   nameElem.textContent = 'Stores';
-  trElem.appendChild(nameElem);
+  thead.appendChild(nameElem);
 
   for (let i = 0; i < hours.length; i++) {
     let hourElem = document.createElement('th');
     hourElem.textContent = hours[i];
-    trElem.appendChild(hourElem);
+    thead.appendChild(hourElem);
   }
 
   let totalHours = document.createElement('th');
   totalHours.textContent = 'Total';
-  trElem.appendChild(totalHours);
+  thead.appendChild(totalHours);
 }
 
 
