@@ -65,7 +65,6 @@ Cookies.prototype.render = function () {
   let trElem = document.createElement('tr');
   table.appendChild(trElem);
 
-
   let nameElem = document.createElement('td');
   nameElem.textContent = this.name;
   trElem.appendChild(nameElem);
@@ -79,30 +78,49 @@ Cookies.prototype.render = function () {
   let totalHours = document.createElement('td');
   totalHours.textContent = this.total;
   trElem.appendChild(totalHours);
+
+  //table.appendChild(trElem);
 };
 
 function header() {
-  let table = document.getElementById('table');
+
+  let theadElem = document.createElement('thead');
+  table.appendChild(theadElem);
 
   let trElem = document.createElement('tr');
-  table.appendChild(trElem);
-
-  let thead = document.createElement('thead');
-  trElem.appendChild(thead);
+  theadElem.appendChild(trElem);
 
   let nameElem = document.createElement('th');
   nameElem.textContent = 'Stores';
-  thead.appendChild(nameElem);
+  theadElem.appendChild(nameElem);
 
   for (let i = 0; i < hours.length; i++) {
     let hourElem = document.createElement('th');
     hourElem.textContent = hours[i];
-    thead.appendChild(hourElem);
+    theadElem.appendChild(hourElem);
   }
 
   let totalHours = document.createElement('th');
   totalHours.textContent = 'Total';
-  thead.appendChild(totalHours);
+  theadElem.appendChild(totalHours);
+}
+
+function footer() {
+  let tr = document.createElement('tr');
+  let td = document.createElement('td');
+  td.textContent = 'Totals';
+  tr.appendChild(td);
+  for (let i = 0; i < hours.length; i++) {
+    let totalHours = 0;
+    for (let j = 0; j < cookiesArray.length; j++) {
+      totalHours = totalHours + cookiesArray[j].cookiesbought[i];
+    }
+    let td = document.createElement('td');
+    td.textContent = totalHours;
+    tr.appendChild(td);
+  }
+  table.appendChild(tr);
+
 }
 
 
@@ -125,6 +143,8 @@ function renderALL() {
 }
 
 
+
 header();
 renderALL();
+footer();
 
